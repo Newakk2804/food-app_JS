@@ -3,8 +3,11 @@ const colors = require("colors");
 const cors = require("cors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
+const connectDb = require("./config/db");
 
 dotenv.config();
+
+connectDb();
 
 const app = express();
 
@@ -13,6 +16,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/api/v1/test", require("./routes/testRoutes"));
+app.use("/api/v1/auth", require("./routes/authRoutes"));
 
 app.get("/", (req, res) => {
     res.status(200).send("<h1>Welcome to Food Sever</h1>");
