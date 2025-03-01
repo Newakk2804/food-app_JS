@@ -25,5 +25,5 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 8081;
 
 app.listen(PORT, () => {
-    console.log(`Server Running on port: ${PORT}`.bgGreen.red.bold);
+    console.log(`Server Running on port: ${PORT}`.bgWhite.bold);
 });
