@@ -1,9 +1,17 @@
 const express = require("express");
 const authMiddleware = require("../middlewares/authMiddleware");
-const { createFoodController } = require("../controllers/foodController");
+const {
+    createFoodController,
+    getAllFoodsController,
+    getSingleFoodController,
+    getFoodByRestaurantController,
+} = require("../controllers/foodController");
 
 const router = express.Router();
 
 router.post("/create", authMiddleware, createFoodController);
+router.get("/get-all", getAllFoodsController);
+router.get("/get/:id", getSingleFoodController);
+router.get("/get-by-restaurant/:id", getFoodByRestaurantController);
 
 module.exports = router;

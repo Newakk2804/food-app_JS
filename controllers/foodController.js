@@ -50,4 +50,95 @@ const createFoodController = async (req, res) => {
     }
 };
 
-module.exports = { createFoodController };
+const getAllFoodsController = async (req, res) => {
+    try {
+        const foods = await foodModel.find();
+        if (!foods) {
+            return res.status(404).send({
+                success: false,
+                message: "No foods items was found",
+            });
+        }
+
+        res.status(200).send({
+            success: true,
+            totalCount: foods.length,
+            foods,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error in get all foods API",
+            error,
+        });
+    }
+};
+
+const getSingleFoodController = async (req, res) => {
+    try {
+        const foodId = req.params.id;
+        if (!foodId) {
+            return res.status(500).send({
+                success: false,
+                message: "Please provide food ID",
+            });
+        }
+
+        const food = await foodModel.findById(foodId);
+        if (!food) {
+            return res.status(404).send({
+                success: false,
+                message: "Not found food",
+            });
+        }
+
+        res.status(200).send({
+            success: true,
+            food,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error in get single food API",
+            error,
+        });
+    }
+};
+
+const getFoodByRestaurantController = async (req, res) => {
+    try {
+        const restaurantId = req.params.id;
+        if (!restaurantId) {
+            return res.status(500).send({
+                success: false,
+                message: "Please provide restaurant ID",
+            });
+        }
+
+        const foods = await foodModel.find({restaurant: restaurantId});
+        if (!foods) {
+            return res.status(404).send({
+                success: false,
+                message: "Not found food by this restaurant",
+            });
+        }
+
+        res.status(200).send({
+            success: true,
+            message: "food base on restaurant",
+            totalFoods: foods.length,
+            foods,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error in get single food API",
+            error,
+        });
+    }
+};
+
+module.exports = { createFoodController, getAllFoodsController, getSingleFoodController, getFoodByRestaurantController };
