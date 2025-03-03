@@ -1,6 +1,4 @@
 const restaurantModel = require("../models/restaurantModel");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 const createRestaurantController = async (req, res) => {
     try {

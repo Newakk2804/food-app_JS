@@ -1,5 +1,4 @@
 const express = require("express");
-const {} = require("../controllers/restaurantController");
 const authMiddleware = require("../middlewares/authMiddleware");
 const {
     createRestaurantController,
