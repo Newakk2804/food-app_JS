@@ -95,4 +95,31 @@ const loginController = async (req, res) => {
     }
 };
 
-module.exports = { registerController, loginController };
+const logoutController = (req, res) => {
+    try {
+        const token = req.headers["authorization"];
+        if (!token) {
+            return res.status(404).send({
+                success: false,
+                message: "You are not authorized in more than one account",
+            });
+        }
+
+        req.headers["authorization"] = undefined;
+
+        res.status(200).send({
+            success: true,
+            message: "Logout successfully",
+            token: req.headers["authorization"],
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error in logout API",
+            error,
+        });
+    }
+};
+
+module.exports = { registerController, loginController, logoutController };
